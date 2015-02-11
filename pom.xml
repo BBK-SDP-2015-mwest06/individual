@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.montywest</groupId>
+  <artifactId>sml</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>SML</name>
+  <description>An interpreter for SML (simplified machine language). Coursework for SDP-2015.</description>
+  
+  <dependencies>
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.16.2</version>
+		<scope>provided</scope>
+	</dependency>
+  </dependencies>
+</project>
