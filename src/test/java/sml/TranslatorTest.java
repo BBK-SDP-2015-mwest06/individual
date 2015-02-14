@@ -1,6 +1,6 @@
 package sml;
 
-import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.*;
 
 import java.lang.reflect.Field;
 
@@ -143,10 +143,13 @@ public class TranslatorTest {
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
-		AddInstruction instr = (AddInstruction)translator.getInstruction(label);
-		assertEquals(5, instr.getResultRegister());
-		assertEquals(1, instr.getOp1Register());
-		assertEquals(3, instr.getOp2Register());
+		Instruction instr = translator.getInstruction(label);
+		
+		assertTrue(instr instanceof AddInstruction);
+		AddInstruction addInstr = (AddInstruction) instr;
+		assertEquals(5, addInstr.getResultRegister());
+		assertEquals(1, addInstr.getOp1Register());
+		assertEquals(3, addInstr.getOp2Register());
 	}
 	
 	@Test
@@ -159,9 +162,12 @@ public class TranslatorTest {
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
-		LinInstruction instr = (LinInstruction) translator.getInstruction(label);
-		assertEquals(5, instr.getRegister());
-		assertEquals(3, instr.getValue());
+		Instruction instr = translator.getInstruction(label);
+		assertTrue(instr instanceof LinInstruction);
+		
+		LinInstruction linInstr = (LinInstruction) instr;
+		assertEquals(5, linInstr.getRegister());
+		assertEquals(3, linInstr.getValue());
 	}
 
 	@After
