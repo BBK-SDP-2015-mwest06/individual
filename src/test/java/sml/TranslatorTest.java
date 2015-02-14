@@ -133,6 +133,37 @@ public class TranslatorTest {
 		assertEquals("bnz", instr.getOpcode());
 		assertEquals("f0", instr.getLabel());
 	}
+	
+	@Test
+	public void testGetAddInstruction() {
+		String label = "f0";
+		String line = "add 5 1 3";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		AddInstruction instr = (AddInstruction)translator.getInstruction(label);
+		assertEquals(5, instr.getResultRegister());
+		assertEquals(1, instr.getOp1Register());
+		assertEquals(3, instr.getOp2Register());
+	}
+	
+	@Test
+	public void testGetLinInstruction() {
+		String label = "f0";
+		String line = "lin 5 3";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		LinInstruction instr = (LinInstruction) translator.getInstruction(label);
+		assertEquals(5, instr.getRegister());
+		assertEquals(3, instr.getValue());
+	}
 
 	@After
 	public void teardown() {

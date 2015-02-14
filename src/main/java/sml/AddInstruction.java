@@ -13,30 +13,30 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 public class AddInstruction extends Instruction {
 
-	private int result;
-	private int op1;
-	private int op2;
+	private int resultRegister;
+	private int op1Register;
+	private int op2Register;
 
 	public AddInstruction(String label, String op) {
 		super(label, op);
 	}
 
-	public AddInstruction(String label, int result, int op1, int op2) {
+	public AddInstruction(String label, int resultRegister, int op1Register, int op2Register) {
 		this(label, "add");
-		this.result = result;
-		this.op1 = op1;
-		this.op2 = op2;
+		this.resultRegister = resultRegister;
+		this.op1Register = op1Register;
+		this.op2Register = op2Register;
 	}
 
 	@Override
 	public void execute(Machine m) {
-		int value1 = m.getRegisters().getRegister(op1);
-		int value2 = m.getRegisters().getRegister(op2);
-		m.getRegisters().setRegister(result, value1 + value2);
+		int value1 = m.getRegisters().getRegister(op1Register);
+		int value2 = m.getRegisters().getRegister(op2Register);
+		m.getRegisters().setRegister(resultRegister, value1 + value2);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + op1 + " + " + op2 + " to " + result;
+		return super.toString() + " " + op1Register + " + " + op2Register + " to " + resultRegister;
 	}
 }
