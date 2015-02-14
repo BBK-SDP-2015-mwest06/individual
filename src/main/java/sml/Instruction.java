@@ -1,11 +1,16 @@
 package sml;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * This class is the superclass of the classes for machine instructions
  * 
  * @author someone
  */
 
+@Data
+@EqualsAndHashCode
 public abstract class Instruction {
 	protected String label;
 	protected String opcode;
