@@ -26,7 +26,6 @@ public class TranslatorTest {
 			throw new RuntimeException(e);
 		}
 		translatorLineField.setAccessible(true);
-		System.out.println("test");
 	}
 	
 	@Test
