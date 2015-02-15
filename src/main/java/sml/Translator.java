@@ -88,7 +88,7 @@ public class Translator {
 			return this.createInstruction(label, constructor);
 			
 		} catch (ClassNotFoundException e) {
-			throw new IllegalArgumentException("Instruction: " + opCode + " not found.", e);
+			throw new IllegalArgumentException("Instruction: " + opCode + " not found. " + e.getMessage(), e);
 		}		
 	}
 
@@ -128,11 +128,12 @@ public class Translator {
 
 	private Class<?> getInstructionClass(String opCode)
 			throws ClassNotFoundException {
+		String packageName = "sml";
 		String suffix = "Instruction";
 		String first = opCode.substring(0, 1);
 		String rest = opCode.substring(1, 3);
 		String prefix = first.toUpperCase() + rest;
-		String className = prefix + suffix;
+		String className = packageName + "." + prefix + suffix;
 		Class<?> instrClass = Class.forName(className);
 		return instrClass;
 	}
