@@ -126,6 +126,13 @@ public class Translator {
 		}
 	}
 
+	/***
+	 * Constructs the full instruction class name and uses reflection to find the class
+	 * 
+	 * @param opCode
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
 	private Class<?> getInstructionClass(String opCode)
 			throws ClassNotFoundException {
 		String packageName = "sml";
@@ -138,6 +145,12 @@ public class Translator {
 		return instrClass;
 	}
 
+	/***
+	 * Returns true if the provided class is a subclass (of any depth) of Instruction
+	 * 
+	 * @param instrClass
+	 * @return
+	 */
 	private boolean isSubclassOfInstruction(Class<?> instrClass) {
 		Class<?> superclass = instrClass.getSuperclass();
 		while (superclass != null) {
@@ -148,6 +161,13 @@ public class Translator {
 		return false;
 	}
 
+	/***
+	 * Finds the full constructor for the instruction class, ignoring the label-opCode constructor
+	 * Throws an InternalError if there are more than two constructors that are viable.
+	 * 
+	 * @param instrClass
+	 * @return
+	 */
 	private Constructor<?> getConstructorForInstructionClass(Class<?> instrClass) {
 		Constructor<?>[] allConstructors = instrClass.getDeclaredConstructors();
 		if (allConstructors.length == 1) {
@@ -169,6 +189,14 @@ public class Translator {
 		}
 	}
 	
+	/***
+	 * Creates an instance of the instruction, with the label provided, using the constructor provided.
+	 * Throws InternalError if any of the instruction classes are malformed
+	 * 
+	 * @param label
+	 * @param constructor
+	 * @return
+	 */
 	private Instruction createInstruction(String label, Constructor<?> constructor) {
 		Class<?>[] paramTypes = constructor.getParameterTypes();
 		ArrayList<Object> paramList = new ArrayList<>();
