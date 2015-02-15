@@ -169,6 +169,25 @@ public class TranslatorTest {
 		assertEquals(5, linInstr.getRegister());
 		assertEquals(3, linInstr.getValue());
 	}
+	
+	@Test
+	public void testGetSubInstruction() {
+		String label = "f0";
+		String line = "sub 5 1 3";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		Instruction instr = translator.getInstruction(label);
+		
+		assertTrue(instr instanceof SubInstruction);
+		SubInstruction addInstr = (SubInstruction) instr;
+		assertEquals(5, addInstr.getResultRegister());
+		assertEquals(1, addInstr.getOp1Register());
+		assertEquals(3, addInstr.getOp2Register());
+	}
 
 	@After
 	public void teardown() {
