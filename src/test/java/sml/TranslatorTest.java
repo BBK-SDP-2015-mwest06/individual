@@ -1,6 +1,7 @@
 package sml;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 
@@ -187,6 +188,25 @@ public class TranslatorTest {
 		assertEquals(4, addInstr.getResultRegister());
 		assertEquals(3, addInstr.getOp1Register());
 		assertEquals(2, addInstr.getOp2Register());
+	}
+	
+	@Test
+	public void testGetMulInstruction() {
+		String label = "f0";
+		String line = "mul 11 4 5";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		Instruction instr = translator.getInstruction(label);
+		
+		assertTrue(instr instanceof MulInstruction);
+		MulInstruction addInstr = (MulInstruction) instr;
+		assertEquals(11, addInstr.getResultRegister());
+		assertEquals(4, addInstr.getOp1Register());
+		assertEquals(5, addInstr.getOp2Register());
 	}
 
 	@After

@@ -35,4 +35,11 @@ public class MachineIntegrationTest {
 		assertEquals(8, machine.getRegisters().getRegister(12));
 	}
 	
+	@Test
+	public void mulIntegrationTest() {
+		Machine.main( new String[] {"test/multest.sml"});
+		
+		assertEquals(20, machine.getRegisters().getRegister(19));
+		assertEquals(80, machine.getRegisters().getRegister(18));
+	}
 }
