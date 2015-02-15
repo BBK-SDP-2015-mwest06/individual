@@ -31,4 +31,9 @@ public abstract class ArithmeticInstruction extends Instruction {
 	}
 
 	protected abstract int getOperationResult(int value1, int value2);
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }
