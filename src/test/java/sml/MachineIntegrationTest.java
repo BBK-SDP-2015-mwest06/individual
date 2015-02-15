@@ -29,7 +29,7 @@ public class MachineIntegrationTest {
 	
 	@Test
 	public void subIntegrationTest() {
-		Machine.main( new String[] {"test/addtest.sml"});
+		Machine.main( new String[] {"test/subtest.sml"});
 		
 		assertEquals(14, machine.getRegisters().getRegister(11));
 		assertEquals(8, machine.getRegisters().getRegister(12));

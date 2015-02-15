@@ -173,7 +173,7 @@ public class TranslatorTest {
 	@Test
 	public void testGetSubInstruction() {
 		String label = "f0";
-		String line = "sub 5 1 3";
+		String line = "sub 4 3 2";
 		
 		try {
 			translatorLineField.set(translator, line);
@@ -184,9 +184,9 @@ public class TranslatorTest {
 		
 		assertTrue(instr instanceof SubInstruction);
 		SubInstruction addInstr = (SubInstruction) instr;
-		assertEquals(5, addInstr.getResultRegister());
-		assertEquals(1, addInstr.getOp1Register());
-		assertEquals(3, addInstr.getOp2Register());
+		assertEquals(4, addInstr.getResultRegister());
+		assertEquals(3, addInstr.getOp1Register());
+		assertEquals(2, addInstr.getOp2Register());
 	}
 
 	@After

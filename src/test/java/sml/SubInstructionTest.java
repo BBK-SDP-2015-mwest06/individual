@@ -53,6 +53,6 @@ public class SubInstructionTest {
 		verify(registers).setRegister(intCapture1.capture(), intCapture2.capture());
 		
 		assertEquals(intCapture1.getValue().intValue(), resultRegister);
-		assertEquals(intCapture2.getValue().intValue(), op1Value + op2Value);
+		assertEquals(intCapture2.getValue().intValue(), op1Value - op2Value);
 	}
 }
