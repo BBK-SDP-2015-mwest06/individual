@@ -1,9 +1,7 @@
 package sml;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static junit.framework.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +11,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SubInstructionTest {
-
+public class MulInstructionTest {
+	
 	@Mock
 	private Machine machine;
 	
@@ -24,21 +22,21 @@ public class SubInstructionTest {
 	private ArgumentCaptor<Integer> intCapture1 = ArgumentCaptor.forClass(Integer.class);
 	private ArgumentCaptor<Integer> intCapture2 = ArgumentCaptor.forClass(Integer.class);
 	
-	private SubInstruction baseInstr;
+	private MulInstruction baseInstr;
 	
 	@Before
 	public void setUp() {
 		when(machine.getRegisters()).thenReturn(registers);
-		baseInstr = new SubInstruction("f0", "sub");
+		baseInstr = new MulInstruction("f0", "mul");
 	}
 	
 	@Test
 	public void testExecute() {
-		int resultRegister = 5;
-		int op1Register = 4;
+		int resultRegister = 19;
+		int op1Register = 5;
 		int op2Register = 6;
-		int op1Value = 18;
-		int op2Value = 13;
+		int op1Value = 11;
+		int op2Value = 2;
 		
 		baseInstr.setResultRegister(resultRegister);
 		baseInstr.setOp1Register(op1Register);
@@ -53,6 +51,6 @@ public class SubInstructionTest {
 		verify(registers).setRegister(intCapture1.capture(), intCapture2.capture());
 		
 		assertEquals(intCapture1.getValue().intValue(), resultRegister);
-		assertEquals(intCapture2.getValue().intValue(), op1Value - op2Value);
+		assertEquals(intCapture2.getValue().intValue(), op1Value * op2Value);
 	}
 }
