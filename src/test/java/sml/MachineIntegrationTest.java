@@ -42,4 +42,12 @@ public class MachineIntegrationTest {
 		assertEquals(20, machine.getRegisters().getRegister(19));
 		assertEquals(80, machine.getRegisters().getRegister(18));
 	}
+	
+	@Test
+	public void divIntegrationTest() {
+		Machine.main( new String[] {"test/divtest.sml"});
+		
+		assertEquals(5, machine.getRegisters().getRegister(2));
+		assertEquals(2, machine.getRegisters().getRegister(1));
+	}
 }

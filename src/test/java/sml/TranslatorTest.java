@@ -184,10 +184,10 @@ public class TranslatorTest {
 		Instruction instr = translator.getInstruction(label);
 		
 		assertTrue(instr instanceof SubInstruction);
-		SubInstruction addInstr = (SubInstruction) instr;
-		assertEquals(4, addInstr.getResultRegister());
-		assertEquals(3, addInstr.getOp1Register());
-		assertEquals(2, addInstr.getOp2Register());
+		SubInstruction subInstr = (SubInstruction) instr;
+		assertEquals(4, subInstr.getResultRegister());
+		assertEquals(3, subInstr.getOp1Register());
+		assertEquals(2, subInstr.getOp2Register());
 	}
 	
 	@Test
@@ -203,10 +203,29 @@ public class TranslatorTest {
 		Instruction instr = translator.getInstruction(label);
 		
 		assertTrue(instr instanceof MulInstruction);
-		MulInstruction addInstr = (MulInstruction) instr;
-		assertEquals(11, addInstr.getResultRegister());
-		assertEquals(4, addInstr.getOp1Register());
-		assertEquals(5, addInstr.getOp2Register());
+		MulInstruction mulInstr = (MulInstruction) instr;
+		assertEquals(11, mulInstr.getResultRegister());
+		assertEquals(4, mulInstr.getOp1Register());
+		assertEquals(5, mulInstr.getOp2Register());
+	}
+	
+	@Test
+	public void testGetDivInstruction() {
+		String label = "f0";
+		String line = "div 13 5 2";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		Instruction instr = translator.getInstruction(label);
+		
+		assertTrue(instr instanceof DivInstruction);
+		DivInstruction divInstr = (DivInstruction) instr;
+		assertEquals(13, divInstr.getResultRegister());
+		assertEquals(5, divInstr.getOp1Register());
+		assertEquals(2, divInstr.getOp2Register());
 	}
 
 	@After
