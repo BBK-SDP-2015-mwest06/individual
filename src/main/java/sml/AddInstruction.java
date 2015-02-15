@@ -3,7 +3,7 @@ package sml;
 import lombok.EqualsAndHashCode;
 
 /**
- * Adds the contents of two registers and places it in a third.
+ * Adds the contents of two registers and places the result in a third.
  * 
  * @author someone
  */

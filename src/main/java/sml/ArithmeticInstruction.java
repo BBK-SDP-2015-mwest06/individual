@@ -3,6 +3,13 @@ package sml;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/***
+ * Abstract super class for all two argument arithmetic instructions.
+ * getOperationResult must be overridden to provide the arithmetic operation result.
+ * 
+ * @author montywest
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=true)
 public abstract class ArithmeticInstruction extends Instruction {

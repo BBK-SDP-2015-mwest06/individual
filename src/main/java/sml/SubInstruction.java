@@ -3,7 +3,7 @@ package sml;
 import lombok.EqualsAndHashCode;
 
 /***
- * Subtracts the contents of two registers and places the result it in a third.
+ * Subtracts the contents of two registers and places the result in a third.
  * 
  * @author montywest
  *

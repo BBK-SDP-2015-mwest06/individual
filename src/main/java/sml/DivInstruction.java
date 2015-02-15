@@ -3,7 +3,7 @@ package sml;
 import lombok.EqualsAndHashCode;
 
 /***
- * Divides the contents of two registers using integer division and places it in a third.
+ * Divides the contents of two registers using integer division and places the result in a third.
  * 
  * @author montywest
  *

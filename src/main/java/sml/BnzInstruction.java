@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /***
- * If the contents of the testRegister provided is not zero then make nextLabel the next instruction
+ * If the contents of the testRegister provided is not zero then makes nextLabel the next instruction
  * 
  * @author montywest
  *
