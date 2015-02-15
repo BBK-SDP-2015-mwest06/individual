@@ -2,6 +2,7 @@ package sml;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -80,40 +81,19 @@ public class Translator {
 		if (line.equals(""))
 			return null;
 
-		String ins = scan();
-		switch (ins) {
-		case "add":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();
-			return new AddInstruction(label, r, s1, s2);
-		case "lin":
-			r = scanInt();
-			s1 = scanInt();
-			return new LinInstruction(label, r, s1);
-		case "sub":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();
-			return new SubInstruction(label, r, s1, s2);
-		case "mul":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();
-			return new MulInstruction(label, r, s1, s2);
-		case "div":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();
-			return new DivInstruction(label, r, s1, s2);
-		case "bnz":
-			r = scanInt();
-			String nl = scan();
-			return new BnzInstruction(label, r, nl);
-		case "out":
-			r = scanInt();
-			return new OutInstruction(label, r);
-		}
+		String opCode = scan();
+		try {
+			Class<?> instrClass = this.getInstructionClass(opCode);
+			if (!this.isSubclassOfInstruction(instrClass))
+				throw new ClassNotFoundException("Class found, but not an Instruction class");
+			Constructor<?> constructor = this.getConstructorForInstructionClass(instrClass);
+			
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("Instruction: " + opCode + " not found.", e);
+		}		
 		return null;
 	}
 
@@ -127,7 +107,8 @@ public class Translator {
 			return "";
 
 		int i = 0;
-		while (i < line.length() && line.charAt(i) != ' ' && line.charAt(i) != '\t') {
+		while (i < line.length() && line.charAt(i) != ' '
+				&& line.charAt(i) != '\t') {
 			i = i + 1;
 		}
 		String word = line.substring(0, i);
@@ -148,5 +129,48 @@ public class Translator {
 		} catch (NumberFormatException e) {
 			return Integer.MAX_VALUE;
 		}
+	}
+
+	private Class<?> getInstructionClass(String opCode)
+			throws ClassNotFoundException {
+		String suffix = "Instruction";
+		String first = opCode.substring(0, 1);
+		String rest = opCode.substring(1, 3);
+		String prefix = first.toUpperCase() + rest;
+		String className = prefix + suffix;
+		Class<?> instrClass = Class.forName(className);
+		return instrClass;
+	}
+
+	private boolean isSubclassOfInstruction(Class<?> instrClass) {
+		Class<?> superclass = instrClass.getSuperclass();
+		while (superclass != null) {
+			if (Instruction.class.equals(superclass))
+				return true;
+			superclass = superclass.getSuperclass();
+		}
+		return false;
+	}
+
+	private Constructor<?> getConstructorForInstructionClass(Class<?> instrClass) {
+		Constructor<?>[] allConstructors = instrClass.getDeclaredConstructors();
+		if (allConstructors.length == 1) {
+			return allConstructors[0];
+		} else if (allConstructors.length == 2) {
+			Constructor<?> opCodeConstructor;
+			try {
+				opCodeConstructor = instrClass.getDeclaredConstructor(
+						String.class, String.class);
+			} catch (NoSuchMethodException | SecurityException e) {
+				throw new InternalError(
+						"Instruction class has malformed constructors", e);
+			}
+			return allConstructors[0].equals(opCodeConstructor) ? allConstructors[1]
+					: allConstructors[0];
+		} else {
+			throw new InternalError(
+					"Instruction class has too many constructors, should only have two.");
+		}
+
 	}
 }
