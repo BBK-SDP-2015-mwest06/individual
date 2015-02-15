@@ -1,6 +1,14 @@
 package sml;
 
+import lombok.EqualsAndHashCode;
 
+/***
+ * Divides the contents of two registers using integer division and places it in a third.
+ * 
+ * @author montywest
+ *
+ */
+@EqualsAndHashCode(callSuper=true)
 public class DivInstruction extends ArithmeticInstruction {
 
 	public DivInstruction(String label, String opCode) {

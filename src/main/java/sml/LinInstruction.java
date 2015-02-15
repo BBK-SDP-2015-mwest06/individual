@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * This class ....
+ * Places a value in a register
  * 
  * @author someone
  */

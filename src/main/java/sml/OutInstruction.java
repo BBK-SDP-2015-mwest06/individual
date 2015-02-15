@@ -3,6 +3,12 @@ package sml;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/***
+ * Uses System.out.println to print the contents of a register
+ * 
+ * @author montywest
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class OutInstruction extends Instruction {

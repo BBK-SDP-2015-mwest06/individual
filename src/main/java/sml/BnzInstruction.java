@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/***
+ * If the contents of the testRegister provided is not zero then make nextLabel the next instruction
+ * 
+ * @author montywest
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class BnzInstruction extends Instruction {

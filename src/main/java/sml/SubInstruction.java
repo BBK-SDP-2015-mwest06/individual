@@ -2,6 +2,12 @@ package sml;
 
 import lombok.EqualsAndHashCode;
 
+/***
+ * Subtracts the contents of two registers and places the result it in a third.
+ * 
+ * @author montywest
+ *
+ */
 @EqualsAndHashCode(callSuper=true)
 public class SubInstruction extends ArithmeticInstruction {
 	

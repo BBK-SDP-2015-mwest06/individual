@@ -3,11 +3,10 @@ package sml;
 import lombok.EqualsAndHashCode;
 
 /**
- * This class ....
+ * Adds the contents of two registers and places it in a third.
  * 
  * @author someone
  */
-
 @EqualsAndHashCode(callSuper=true)
 public class AddInstruction extends ArithmeticInstruction {
 

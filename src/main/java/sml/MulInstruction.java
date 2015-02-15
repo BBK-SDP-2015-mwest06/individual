@@ -2,7 +2,12 @@ package sml;
 
 import lombok.EqualsAndHashCode;
 
-
+/***
+ * Multiplies the contents of two registers and places it in a third.
+ * 
+ * @author montywest
+ *
+ */
 @EqualsAndHashCode(callSuper=true)
 public class MulInstruction extends ArithmeticInstruction {
 	
