@@ -245,6 +245,23 @@ public class TranslatorTest {
 		assertEquals(15, divInstr.getTestRegister());
 		assertEquals("f1", divInstr.getNextLabel());
 	}
+	
+	@Test
+	public void testGetOutInstruction() {
+		String label = "f2";
+		String line = "out 11";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		Instruction instr = translator.getInstruction(label);
+		
+		assertTrue(instr instanceof OutInstruction);
+		OutInstruction divInstr = (OutInstruction) instr;
+		assertEquals(11, divInstr.getRegister());
+	}
 
 	@After
 	public void teardown() {

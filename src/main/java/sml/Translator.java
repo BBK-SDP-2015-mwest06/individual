@@ -110,10 +110,10 @@ public class Translator {
 			r = scanInt();
 			String nl = scan();
 			return new BnzInstruction(label, r, nl);
+		case "out":
+			r = scanInt();
+			return new OutInstruction(label, r);
 		}
-
-		// You will have to write code here for the other instructions.
-
 		return null;
 	}
 

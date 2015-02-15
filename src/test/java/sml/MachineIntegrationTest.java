@@ -1,13 +1,21 @@
 package sml;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+
+import java.io.PrintStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MachineIntegrationTest {
+	
+	@Mock
+	private PrintStream printStream;
 
 	private Machine machine = Machine.getInstance();
 	
@@ -59,5 +67,18 @@ public class MachineIntegrationTest {
 		assertEquals(10, machine.getRegisters().getRegister(6));
 		assertEquals(1, machine.getRegisters().getRegister(7));
 		assertEquals(10, machine.getRegisters().getRegister(8));
+	}
+	
+	@Test
+	public void outIntegrationTest() {
+		PrintStream oldPrintStream = System.out;
+		System.setOut(printStream);
+		ArgumentCaptor<Integer> intCaptor = ArgumentCaptor.forClass(Integer.class);
+		
+		Machine.main( new String[] {"test/outtest.sml"});		
+		
+		verify(printStream).println(intCaptor.capture().intValue());
+		assertEquals(7, intCaptor.getValue().intValue());
+		System.setOut(oldPrintStream);
 	}
 }
