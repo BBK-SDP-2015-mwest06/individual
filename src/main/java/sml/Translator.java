@@ -3,6 +3,7 @@ package sml;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -74,10 +75,6 @@ public class Translator {
 	// removed. Translate line into an instruction with label label
 	// and return the instruction
 	public Instruction getInstruction(String label) {
-		int s1; // Possible operands of the instruction
-		int s2;
-		int r;
-
 		if (line.equals(""))
 			return null;
 
@@ -88,13 +85,11 @@ public class Translator {
 				throw new ClassNotFoundException("Class found, but not an Instruction class");
 			Constructor<?> constructor = this.getConstructorForInstructionClass(instrClass);
 			
-			
-			
+			return this.createInstruction(label, constructor);
 			
 		} catch (ClassNotFoundException e) {
 			throw new IllegalArgumentException("Instruction: " + opCode + " not found.", e);
 		}		
-		return null;
 	}
 
 	/*
@@ -171,6 +166,34 @@ public class Translator {
 			throw new InternalError(
 					"Instruction class has too many constructors, should only have two.");
 		}
-
+	}
+	
+	private Instruction createInstruction(String label, Constructor<?> constructor) {
+		Class<?>[] paramTypes = constructor.getParameterTypes();
+		ArrayList<Object> paramList = new ArrayList<>();
+		paramList.add(label);
+		for (int i = 1; i < paramTypes.length; i++) {
+			Class<?> paramType = paramTypes[i];
+			if (String.class.equals(paramType))
+				paramList.add(scan());
+			else if (int.class.equals(paramType) || Integer.class.equals(paramType))
+				paramList.add(scanInt());
+			else
+				throw new InternalError("Instruction class " + constructor.getName() + " has a malformed constructor, should only accept Strings and ints/Integers.");
+		}
+		 
+		Object[] paramArr = paramList.toArray();
+		try {
+			Instruction instr = (Instruction) constructor.newInstance(paramArr);
+			return instr;
+		} catch (InstantiationException e) {
+			throw new InternalError("Instruction class " + constructor.getName() + " is abstract.");
+		} catch (IllegalAccessException e) {
+			throw new InternalError("Instruction class " + constructor.getName() + " has a malformed constructor, should be public");
+		} catch (IllegalArgumentException e) {
+			throw new InternalError("Instruction class " + constructor.getName() + " has a malformed constructor, first parameter should be label");
+		} catch (InvocationTargetException e) {
+			throw new InternalError("Instruction class " + constructor.getName() + "'s constructor threw an error", e);
+		}
 	}
 }
