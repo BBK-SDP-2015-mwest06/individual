@@ -9,9 +9,11 @@ import lombok.Data;
  */
 @Data
 public class Machine {
+	
+	private static Machine instance;
+	
 	// The labels in the SML program, in the order in which
 	// they appear (are defined) in the program
-
 	private Labels labels;
 
 	// The SML program, consisting of prog.size() instructions, each
@@ -25,16 +27,27 @@ public class Machine {
 	// the next instruction to be executed.
 
 	private int pc;
+	
+	protected Machine(){
+		
+	}
 
 	{
 		labels = new Labels();
 		prog = new ArrayList<>();
 		pc = 0;
 	}
+	
+	public static Machine getInstance() {
+		if (instance == null) {
+			instance = new Machine();
+		}
+		return instance;	
+	}
 
 	public static void main(String[] args) {
 
-		Machine m = new Machine();
+		Machine m = Machine.getInstance();
 		Translator t = new Translator(args[0]);
 		t.readAndTranslate(m.getLabels(), m.getProg());
 
