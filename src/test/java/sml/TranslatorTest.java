@@ -227,6 +227,24 @@ public class TranslatorTest {
 		assertEquals(5, divInstr.getOp1Register());
 		assertEquals(2, divInstr.getOp2Register());
 	}
+	
+	@Test
+	public void testGetBnzInstruction() {
+		String label = "f2";
+		String line = "bnz 15 f1";
+		
+		try {
+			translatorLineField.set(translator, line);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+		Instruction instr = translator.getInstruction(label);
+		
+		assertTrue(instr instanceof BnzInstruction);
+		BnzInstruction divInstr = (BnzInstruction) instr;
+		assertEquals(15, divInstr.getTestRegister());
+		assertEquals("f1", divInstr.getNextLabel());
+	}
 
 	@After
 	public void teardown() {

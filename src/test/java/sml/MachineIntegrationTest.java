@@ -50,4 +50,14 @@ public class MachineIntegrationTest {
 		assertEquals(5, machine.getRegisters().getRegister(2));
 		assertEquals(2, machine.getRegisters().getRegister(1));
 	}
+	
+	@Test
+	public void bnzIntegrationTest() {
+		Machine.main( new String[] {"test/bnztest.sml"});
+		
+		assertEquals(3, machine.getRegisters().getRegister(5));
+		assertEquals(10, machine.getRegisters().getRegister(6));
+		assertEquals(1, machine.getRegisters().getRegister(7));
+		assertEquals(10, machine.getRegisters().getRegister(8));
+	}
 }
